@@ -61,7 +61,7 @@ export default class LdapSearch {
   // TODO: Write unit test
   async match(field: string, pattern: string): Promise<any> {
     try {
-      await this._client.bind(this._dn, this._password);
+      await this.client.bind(this._dn, this._password);
       const { searchEntries } = await this.client.search(this._searchBase, {
         scope: "sub",
         filter: `${field}=${pattern}`
@@ -70,7 +70,7 @@ export default class LdapSearch {
     } catch (error) {
       throw error;
     } finally {
-      await this._client.unbind();
+      await this.client.unbind();
     }
   }
 }

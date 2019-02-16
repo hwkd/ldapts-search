@@ -1,5 +1,4 @@
 {
-    "compileOnSave": true,
     "exclude": ["./node_modules", "./dist", "./src/**/*.test.ts"],
     "compilerOptions": {
       "target": "es6",                          

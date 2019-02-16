@@ -1,20 +1,31 @@
 {
   "name": "ldapts-search",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Search through active directory",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-mocha src/**/*.test.ts"
   },
-  "keywords": ["ldap", "active directory", "typescript"],
+  "keywords": [
+    "ldap",
+    "active directory",
+    "typescript"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "ldapts": "^1.3.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
     "@types/node": "^11.9.4",
+    "@types/sinon": "^7.0.6",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "sinon": "^7.2.3",
+    "ts-mocha": "^2.0.0",
     "typescript": "^3.3.3"
   }
 }
