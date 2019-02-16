@@ -37,7 +37,7 @@ describe("LdapSearch", function() {
       fakeSearch = fake.returns({
         searchEntries: [
           {
-            sAMAccountName: "hyun.kim"
+            sAMAccountName: "john.doe"
           }
         ]
       }),
@@ -49,13 +49,13 @@ describe("LdapSearch", function() {
       unbind: fakeUnbind
     });
 
-    const results = await ldapSearch.match("sAMAccountName", "hyun.kim");
+    const results = await ldapSearch.match("sAMAccountName", "john.doe");
     expect(fakeBind.calledOnceWithExactly(config.dn, config.password));
     expect(fakeSearch.calledOnceWithExactly(config.searchBase));
     expect(fakeUnbind.calledOnce);
     expect(results).to.have.length(1);
     expect(results[0])
       .to.have.ownProperty("sAMAccountName")
-      .that.equals("hyun.kim");
+      .that.equals("john.doe");
   });
 });

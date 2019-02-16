@@ -58,7 +58,6 @@ export default class LdapSearch {
     return this._client;
   }
 
-  // TODO: Write unit test
   async match(field: string, pattern: string): Promise<any> {
     try {
       await this.client.bind(this._dn, this._password);
