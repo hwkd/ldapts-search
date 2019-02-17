@@ -10,17 +10,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const ldapts_1 = require("ldapts");
 class LdapSearch {
+    constructor(args) {
+        this.match = (field, pattern) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.client.bind(this._dn, this._password);
+                const { searchEntries } = yield this.client.search(this._searchBase, {
+                    scope: "sub",
+                    filter: `${field}=${pattern}`
+                });
+                return searchEntries;
+            }
+            catch (error) {
+                throw error;
+            }
+            finally {
+                yield this.client.unbind();
+            }
+        });
+        this._url = `ldap://${args.ip}:${args.port}`;
+        this._dn = args.dn;
+        this._password = args.password;
+        this._searchBase = args.searchBase;
+    }
     static instance(args) {
         if (!LdapSearch._instance) {
             LdapSearch._instance = new LdapSearch(args);
         }
         return LdapSearch._instance;
-    }
-    constructor(args) {
-        this._url = `ldap://${args.ip}:${args.port}`;
-        this._dn = args.dn;
-        this._password = args.password;
-        this._searchBase = args.searchBase;
     }
     get url() {
         return this._url;
@@ -42,24 +58,6 @@ class LdapSearch {
             });
         }
         return this._client;
-    }
-    match(field, pattern) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this._client.bind(this._dn, this._password);
-                const { searchEntries } = yield this.client.search(this._searchBase, {
-                    scope: "sub",
-                    filter: `${field}=${pattern}`
-                });
-                return searchEntries;
-            }
-            catch (error) {
-                throw error;
-            }
-            finally {
-                yield this._client.unbind();
-            }
-        });
     }
 }
 exports.default = LdapSearch;

@@ -16,11 +16,11 @@ export default class LdapSearch {
     private _password;
     private _searchBase;
     static instance(args: Params.LdapSearch): LdapSearch;
-    private constructor();
+    constructor(args: Params.LdapSearch);
     readonly url: string;
     readonly dn: string;
     readonly password: string;
     readonly searchBase: string;
     readonly client: Client;
-    match(field: string, pattern: string): Promise<any>;
+    match: (field: string, pattern: string) => Promise<any>;
 }
