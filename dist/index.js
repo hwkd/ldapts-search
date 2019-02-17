@@ -11,12 +11,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ldapts_1 = require("ldapts");
 class LdapSearch {
     constructor(args) {
-        this.match = (field, pattern) => __awaiter(this, void 0, void 0, function* () {
+        this.match = (field, pattern, sizeLimit) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.client.bind(this._dn, this._password);
                 const { searchEntries } = yield this.client.search(this._searchBase, {
                     scope: "sub",
-                    filter: `${field}=${pattern}`
+                    filter: `${field}=${pattern}`,
+                    sizeLimit,
+                    attributes: this._attributes,
                 });
                 return searchEntries;
             }
@@ -31,6 +33,7 @@ class LdapSearch {
         this._dn = args.dn;
         this._password = args.password;
         this._searchBase = args.searchBase;
+        this._attributes = args.attributes;
     }
     static instance(args) {
         if (!LdapSearch._instance) {

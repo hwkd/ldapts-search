@@ -6,6 +6,7 @@ export declare namespace Params {
         dn: string;
         password: string;
         searchBase: string;
+        attributes?: string[];
     }
 }
 export default class LdapSearch {
@@ -15,6 +16,7 @@ export default class LdapSearch {
     private _dn;
     private _password;
     private _searchBase;
+    private _attributes?;
     static instance(args: Params.LdapSearch): LdapSearch;
     constructor(args: Params.LdapSearch);
     readonly url: string;
@@ -22,5 +24,5 @@ export default class LdapSearch {
     readonly password: string;
     readonly searchBase: string;
     readonly client: Client;
-    match: (field: string, pattern: string) => Promise<any>;
+    match: (field: string, pattern: string, sizeLimit?: number | undefined) => Promise<any>;
 }
