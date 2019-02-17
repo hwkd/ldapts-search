@@ -7,6 +7,7 @@ export namespace Params {
     dn: string;
     password: string;
     searchBase: string;
+    attributes?: string[];
   }
 }
 
@@ -17,6 +18,7 @@ export default class LdapSearch {
   private _dn: string;
   private _password: string;
   private _searchBase: string;
+  private _attributes?: string[];
 
   public static instance(args: Params.LdapSearch) {
     if (!LdapSearch._instance) {
@@ -30,6 +32,7 @@ export default class LdapSearch {
     this._dn = args.dn;
     this._password = args.password;
     this._searchBase = args.searchBase;
+    this._attributes = args.attributes;
   }
 
   get url() {
@@ -58,12 +61,14 @@ export default class LdapSearch {
     return this._client;
   }
 
-  match = async (field: string, pattern: string): Promise<any> => {
+  match = async (field: string, pattern: string, sizeLimit?: number): Promise<any> => {
     try {
       await this.client.bind(this._dn, this._password);
       const { searchEntries } = await this.client.search(this._searchBase, {
         scope: "sub",
-        filter: `${field}=${pattern}`
+        filter: `${field}=${pattern}`,
+        sizeLimit,
+        attributes: this._attributes,
       });
       return searchEntries;
     } catch (error) {
