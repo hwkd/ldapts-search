@@ -25,10 +25,22 @@ describe("LdapSearch", function() {
     expect(instance_1).to.equal(instance_2);
   });
 
+  it("should create separate instances", function() {
+    const instance_1 = new LdapSearch(config);
+    const instance_2 = new LdapSearch(config);
+    expect(instance_1).to.not.equal(instance_2);
+  });
+
   it("has singleton ldap client", function() {
     const instance_1 = LdapSearch.instance(config);
     const instance_2 = LdapSearch.instance(config);
     expect(instance_1.client).to.equal(instance_2.client);
+  });
+
+  it("should have separate clients", function() {
+    const instance_3 = new LdapSearch(config);
+    const instance_4 = new LdapSearch(config);
+    expect(instance_3.client).to.not.equal(instance_4.client);
   });
 
   it("should search ldap", async function() {

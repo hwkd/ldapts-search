@@ -25,7 +25,7 @@ export default class LdapSearch {
     return LdapSearch._instance;
   }
 
-  private constructor(args: Params.LdapSearch) {
+  constructor(args: Params.LdapSearch) {
     this._url = `ldap://${args.ip}:${args.port}`;
     this._dn = args.dn;
     this._password = args.password;
@@ -58,7 +58,7 @@ export default class LdapSearch {
     return this._client;
   }
 
-  async match(field: string, pattern: string): Promise<any> {
+  match = async (field: string, pattern: string): Promise<any> => {
     try {
       await this.client.bind(this._dn, this._password);
       const { searchEntries } = await this.client.search(this._searchBase, {
