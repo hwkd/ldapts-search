@@ -37,10 +37,9 @@ describe("LdapSearch", function() {
     expect(instance_1.client).to.equal(instance_2.client);
   });
 
-  it("should have separate clients", function() {
-    const instance_3 = new LdapSearch(config);
-    const instance_4 = new LdapSearch(config);
-    expect(instance_3.client).to.not.equal(instance_4.client);
+  it("should have separate instance of clients", function() {
+    const ldapSearch = new LdapSearch(config);
+    expect(ldapSearch.client()).to.not.equal(ldapSearch.client());
   });
 
   it("should search ldap", async function() {
@@ -55,11 +54,11 @@ describe("LdapSearch", function() {
       }),
       fakeUnbind = fake();
 
-    stub(ldapSearch, "client").value({
+    stub(ldapSearch, "client").value(() => ({
       bind: fakeBind,
       search: fakeSearch,
       unbind: fakeUnbind
-    });
+    }));
 
     const results = await ldapSearch.match("sAMAccountName", "john.doe");
     expect(fakeBind.calledOnceWithExactly(config.dn, config.password));

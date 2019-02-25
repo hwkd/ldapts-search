@@ -13,7 +13,6 @@ export namespace Params {
 
 export default class LdapSearch {
   private static _instance: LdapSearch;
-  private _client: Client;
   private _url: string;
   private _dn: string;
   private _password: string;
@@ -51,20 +50,19 @@ export default class LdapSearch {
     return this._searchBase;
   }
 
-  get client(): Client {
-    if (!this._client) {
-      this._client = new Client({
-        url: this._url,
-        connectTimeout: 3000
-      });
-    }
-    return this._client;
+  client(): Client {
+    return new Client({
+      url: this._url,
+      connectTimeout: 3000
+    });
   }
 
   match = async (field: string, pattern: string, sizeLimit?: number): Promise<any> => {
+    let client;
     try {
-      await this.client.bind(this._dn, this._password);
-      const { searchEntries } = await this.client.search(this._searchBase, {
+      client = this.client();
+      await client.bind(this._dn, this._password);
+      const { searchEntries } = await client.search(this._searchBase, {
         scope: "sub",
         filter: `${field}=${pattern}`,
         sizeLimit,
@@ -74,7 +72,7 @@ export default class LdapSearch {
     } catch (error) {
       throw error;
     } finally {
-      await this.client.unbind();
+      await client.unbind();
     }
   }
 }
