@@ -57,14 +57,14 @@ export default class LdapSearch {
     });
   }
 
-  match = async (field: string, pattern: string, sizeLimit?: number): Promise<any> => {
+  match = async (filter: string, sizeLimit?: number): Promise<any> => {
     let client;
     try {
       client = this.client();
       await client.bind(this._dn, this._password);
       const { searchEntries } = await client.search(this._searchBase, {
         scope: "sub",
-        filter: `${field}=${pattern}`,
+        filter,
         sizeLimit,
         attributes: this._attributes,
       });
