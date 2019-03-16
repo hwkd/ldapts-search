@@ -19,13 +19,6 @@ export default class LdapSearch {
   private _searchBase: string;
   private _attributes?: string[];
 
-  public static instance(args: Params.LdapSearch) {
-    if (!LdapSearch._instance) {
-      LdapSearch._instance = new LdapSearch(args);
-    }
-    return LdapSearch._instance;
-  }
-
   constructor(args: Params.LdapSearch) {
     this._url = `ldap://${args.ip}:${args.port}`;
     this._dn = args.dn;
@@ -56,7 +49,14 @@ export default class LdapSearch {
       connectTimeout: 3000
     });
   }
-
+  
+  
+  /**
+   * @param filter Active directory search filter e.g (&(objectClass=person)(sAMAccountName=john.doe))
+   * @param sizeLimit Number of records returned
+   *
+   * @memberof LdapSearch
+   */
   match = async (filter: string, sizeLimit?: number): Promise<any> => {
     let client;
     try {
