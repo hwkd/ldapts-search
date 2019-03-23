@@ -2,7 +2,7 @@ import { Client } from "ldapts";
 
 export namespace Params {
   export interface LdapSearch {
-    ip: string;
+    host: string;
     port: number;
     dn: string;
     password: string;
@@ -19,7 +19,7 @@ export default class LdapSearch {
   private _attributes?: string[];
 
   constructor(args: Params.LdapSearch) {
-    this._url = `ldap://${args.ip}:${args.port}`;
+    this._url = `ldap://${args.host}:${args.port}`;
     this._dn = args.dn;
     this._password = args.password;
     this._searchBase = args.searchBase;
@@ -56,7 +56,7 @@ export default class LdapSearch {
    *
    * @memberof LdapSearch
    */
-  match = async (filter: string, sizeLimit?: number): Promise<any> => {
+  match = async (filter: string, sizeLimit?: number): Promise<any[]> => {
     let client;
     try {
       client = this.client();

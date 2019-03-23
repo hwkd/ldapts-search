@@ -5,7 +5,7 @@ import LdapSearch from "./index";
 describe("LdapSearch", function() {
   const config = Object.freeze({
     dn: "dn=test",
-    ip: "0.0.0.0",
+    host: "0.0.0.0",
     port: 1234,
     password: "password",
     searchBase: "dn=some,cn=searchbase"
@@ -13,7 +13,7 @@ describe("LdapSearch", function() {
 
   it("sets instance variables", function() {
     const instance = new LdapSearch(config);
-    expect(instance.url).to.equal(`ldap://${config.ip}:${config.port}`);
+    expect(instance.url).to.equal(`ldap://${config.host}:${config.port}`);
     expect(instance.dn).to.equal(config.dn);
     expect(instance.password).to.equal(config.password);
     expect(instance.searchBase).to.equal(config.searchBase);
