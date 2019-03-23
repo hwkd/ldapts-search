@@ -12,7 +12,6 @@ export namespace Params {
 }
 
 export default class LdapSearch {
-  private static _instance: LdapSearch;
   private _url: string;
   private _dn: string;
   private _password: string;
