@@ -18,7 +18,13 @@ class LdapSearch {
 
 Example usage:
 ```
-const ldapSearch = new LdapSearch({
+type Result = {
+  sAMAccountName: string;
+  name: string;
+  dn: string;
+};
+
+const ldapSearch = new LdapSearch<Result>({
   dn: "dn=test",
   host: "0.0.0.0",
   port: 1234,
@@ -32,6 +38,6 @@ const ldapSearch = new LdapSearch({
 });
 
 export function searchActiveDirectory(name: string): ActiveDirectoryRecord[] {
-  return await ldapSearch.match(`(&(objectClass=Person)(sAMAccountName=${name}))`);
+  return await ldapSearch.match(`(&(objectClass=Person)(sAMAccountName=${name}))`); // returns Result[]
 }
 ```
