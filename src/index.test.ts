@@ -12,7 +12,7 @@ describe("LdapSearch", function() {
   });
 
   it("sets instance variables", function() {
-    const instance = new LdapSearch(config);
+    const instance = new LdapSearch<any>(config);
     expect(instance.url).to.equal(`ldap://${config.host}:${config.port}`);
     expect(instance.dn).to.equal(config.dn);
     expect(instance.password).to.equal(config.password);
@@ -20,12 +20,12 @@ describe("LdapSearch", function() {
   });
 
   it("should have separate instance of clients", function() {
-    const ldapSearch = new LdapSearch(config);
+    const ldapSearch = new LdapSearch<any>(config);
     expect(ldapSearch.client()).to.not.equal(ldapSearch.client());
   });
 
   it("should search ldap", async function() {
-    const ldapSearch = new LdapSearch(config),
+    const ldapSearch = new LdapSearch<{ sAMAccountName: string }>(config),
       fakeBind = fake(),
       fakeSearch = fake.returns({
         searchEntries: [

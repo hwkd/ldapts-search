@@ -11,7 +11,7 @@ export namespace Params {
   }
 }
 
-export default class LdapSearch {
+export default class LdapSearch<Result> {
   private _url: string;
   private _dn: string;
   private _password: string;
@@ -56,7 +56,7 @@ export default class LdapSearch {
    *
    * @memberof LdapSearch
    */
-  match = async (filter: string, sizeLimit?: number): Promise<any[]> => {
+  match = async (filter: string, sizeLimit?: number): Promise<Result[]> => {
     let client;
     try {
       client = this.client();
