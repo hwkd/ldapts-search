@@ -18,19 +18,20 @@ class LdapSearch {
 
 Example usage:
 ```
-function searchActiveDirectory(name: string): ActiveDirectoryRecord[] {
-  const ldapSearch = new LdapSearch({
-    dn: "dn=test",
-    host: "0.0.0.0",
-    port: 1234,
-    password: "password",
-    searchBase: "dn=some,cn=searchbase",
-    attributes: [
-      "sAMAccountName",
-      "name",
-      "dn"
-    ]
-  });
+const ldapSearch = new LdapSearch({
+  dn: "dn=test",
+  host: "0.0.0.0",
+  port: 1234,
+  password: "password",
+  searchBase: "dn=some,cn=searchbase",
+  attributes: [
+    "sAMAccountName",
+    "name",
+    "dn"
+  ]
+});
+
+export function searchActiveDirectory(name: string): ActiveDirectoryRecord[] {
   return await ldapSearch.match(`(&(objectClass=Person)(sAMAccountName=${name}))`);
 }
 ```
