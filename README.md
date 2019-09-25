@@ -3,7 +3,7 @@ Utility to help search through active directory.
 
 Definition:
 ```
-class LdapSearch {
+class LdapSearch<Result> {
   constructor(params: {
     host: string;
     port: number;
@@ -12,7 +12,7 @@ class LdapSearch {
     searchBase: string;
     attributes?: string[];
   });
-  match: (filter: string, sizeLimit?: number | undefined) => Promise<any[]>;
+  match: (filter: string, sizeLimit?: number | undefined) => Promise<Result[]>;
 }
 ```
 
