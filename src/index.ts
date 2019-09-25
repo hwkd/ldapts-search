@@ -45,7 +45,7 @@ export default class LdapSearch<Result> {
   client(): Client {
     return new Client({
       url: this._url,
-      connectTimeout: 3000
+      connectTimeout: 10000
     });
   }
   
